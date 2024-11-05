@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import LocationComponent from "../Location";
 import { mapSlideType } from "@/types";
@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
 import "swiper/css/pagination";
+import axios from "axios";
+import { ILocationWeatherResponse } from "@/types/weather";
 const poppins = Poppins({
   weight: "300",
   subsets: ["latin"],
@@ -47,50 +49,37 @@ const SideBar = () => {
   const handleSlideChange = (swiper: SwiperClass) => {
     setActiveMapIndex(swiper.activeIndex);
   };
-  // useEffect(() => {
-  //   let finalMaps = [];
-
-  //   if (userLocation.latitude !== 0 && userLocation.longitude !== 0) {
-  //     finalMaps = initialMaps.slice();
-  //     finalMaps.unshift({
-  //       mapComponent: (
-  //         <Map
-  //           key={0}
-  //           index={0}
-  //           posix={[userLocation.longitude, userLocation.latitude]}
-  //         />
-  //       ),
-  //       city: "idk",
-  //       country: "idk",
-  //       time: "",
-  //     });
-  //   } else {
-  //     finalMaps = initialMaps;
-  //   }
-
-  //   setMaps(finalMaps);
-  // }, [userLocation]);
   useEffect(() => {
-    let finalMaps = [];
     if (userLocation.latitude !== 0 && userLocation.longitude !== 0) {
-      finalMaps = initialMaps.slice();
-      finalMaps.unshift({
-        mapComponent: (
-          <Map
-            key={0}
-            index={0}
-            posix={[userLocation.longitude, userLocation.latitude]}
-          />
-        ),
-        city: "idk",
-        country: "idk",
-        time: "",
-      });
+      const fetchData = async () => {
+        const { data } = await axios.get<ILocationWeatherResponse>(
+          "/api/weather",
+          {
+            params: userLocation,
+          }
+        );
+
+        const finalMaps = initialMaps.slice();
+        finalMaps.unshift({
+          mapComponent: (
+            <Map
+              key={0}
+              index={0}
+              posix={[userLocation.longitude, userLocation.latitude]}
+            />
+          ),
+          city: data.name,
+          country: data.sys.country,
+          time: "",
+        });
+        setMaps(finalMaps);
+      };
+      fetchData();
     } else {
-      finalMaps = initialMaps;
+      setMaps(initialMaps);
     }
-    setMaps(finalMaps);
   }, [userLocation]);
+
   const slides: React.JSX.Element[] = [
     <HumiditySlide key={1} value={75} tooltipText="Humidity" />,
     <TempFeelsLike key={2} value={18} tooltipText="Temperature" />,
