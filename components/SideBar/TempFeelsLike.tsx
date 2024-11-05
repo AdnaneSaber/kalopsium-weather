@@ -50,18 +50,25 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; tooltipText: string }) => {
-  const totalPoints = 61; // Points to cover -30 to 30
-  const range = 60; // 30 on each side of 0
+const ExponentialChart = ({
+  targetValue,
+  tooltipText,
+}: {
+  targetValue: number;
+  tooltipText: string;
+}) => {
+  const totalPoints = 61;
+  const range = 60;
 
-  // Generate values from -30 to 30 (e.g., using a sine wave or linear progression)
-  const linearData = Array.from({ length: totalPoints }, (_, i) => i - range / 2); // Creates an array from -30 to 30
+  const linearData = Array.from(
+    { length: totalPoints },
+    (_, i) => i - range / 2
+  );
 
-  // Find the closest index to the target value
   const targetIndex = linearData.findIndex((value) => value >= targetValue);
 
   const data = {
-    labels: Array.from({ length: totalPoints }, (_, i) => i - range / 2), // X-axis labels
+    labels: Array.from({ length: totalPoints }, (_, i) => i - range / 2),
     datasets: [
       {
         label: "Temperature Line",
@@ -70,12 +77,16 @@ const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; t
           const { chart } = context;
           const { ctx, chartArea } = chart;
 
-          if (!chartArea) return; // Chart not fully initialized
+          if (!chartArea) return;
 
-          // Gradient from blue (left) to red (right)
-          const gradient = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-          gradient.addColorStop(0, "#52cae3"); // Blue for low values
-          gradient.addColorStop(1, "#f04e5a"); // Red for high values
+          const gradient = ctx.createLinearGradient(
+            chartArea.left,
+            0,
+            chartArea.right,
+            0
+          );
+          gradient.addColorStop(0, "#52cae3");
+          gradient.addColorStop(1, "#f04e5a");
           return gradient;
         },
         pointRadius: 0,
@@ -83,7 +94,9 @@ const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; t
       },
       {
         label: "Target Dot",
-        data: linearData.map((value, index) => (index === targetIndex ? value : null)),
+        data: linearData.map((value, index) =>
+          index === targetIndex ? value : null
+        ),
         backgroundColor: "#ffffff",
         pointRadius: 6,
         showLine: false,
@@ -95,20 +108,20 @@ const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; t
     responsive: true,
     scales: {
       x: {
-        display: false, // Hides the X-axis
+        display: false,
       },
       y: {
-        display: false, // Hides the Y-axis
+        display: false,
         min: -30,
-        max: 30, // Y-axis range from -30 to 30
+        max: 30,
       },
     },
     plugins: {
       legend: {
-        display: false, // Hide the legend
+        display: false,
       },
       tooltip: {
-        enabled: false, // Disable default tooltip
+        enabled: false,
       },
       customTooltip: {
         tooltipText,
@@ -127,7 +140,7 @@ const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; t
       const { ctx } = chart;
       const { tooltipText, targetIndex } = pluginOptions;
 
-      const dataset = chart.getDatasetMeta(1); // Dataset for target dot
+      const dataset = chart.getDatasetMeta(1);
       const dataPoint = dataset?.data[targetIndex];
 
       if (dataPoint && ctx) {

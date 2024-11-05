@@ -1,6 +1,6 @@
 import { AppDispatch } from "@/store";
+import { setLocation } from "@/store/slices/weatherSlice";
 import { useEffect } from "react";
-import { setLocation } from "@/store/slices/kaloSlice";
 import { useDispatch } from "react-redux";
 
 const LocationComponent = () => {
