@@ -3,12 +3,12 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import SideBar from "@/components/SideBar/SideBar";
 import Image from "next/image";
-import { ThemeProvider } from "./theme-provider";
+import { Provider } from "react-redux";
+import { store } from "../store";
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import "leaflet/dist/leaflet.css"
-
+import "swiper/css";
+import "swiper/css/pagination";
+import "leaflet/dist/leaflet.css";
 
 const poppins = Poppins({
   weight: "400",
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body className="p-16 my-8">
-        <ThemeProvider>
+        <Provider store={store}>
           <Image
             src={"/skynight.jpg"}
             alt="Kalopsium"
@@ -34,7 +34,7 @@ export default function RootLayout({
           />
           <SideBar />
           {children}
-        </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );

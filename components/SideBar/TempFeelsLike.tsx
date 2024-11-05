@@ -10,6 +10,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Chart,
 } from "chart.js";
 import { ArrowDown, ArrowUp, CloudSnow, Sun, Wind } from "react-feather";
 type propType = {
@@ -65,7 +66,7 @@ const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; t
       {
         label: "Temperature Line",
         data: linearData,
-        borderColor: (context: { chart: any }) => {
+        borderColor: (context: { chart: Chart }) => {
           const { chart } = context;
           const { ctx, chartArea } = chart;
 
@@ -77,8 +78,7 @@ const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; t
           gradient.addColorStop(1, "#f04e5a"); // Red for high values
           return gradient;
         },
-        fill: false,
-        pointRadius: 0, // No dots on main line
+        pointRadius: 0,
         borderWidth: 2,
       },
       {
@@ -120,9 +120,9 @@ const ExponentialChart = ({ targetValue, tooltipText }: { targetValue: number; t
   const customTooltipPlugin = {
     id: "customTooltip",
     afterDatasetsDraw(
-      chart: { getDatasetMeta?: any; ctx?: any },
-      args: any,
-      pluginOptions: { tooltipText: unknown; targetIndex: never }
+      chart: Chart,
+      args: object,
+      pluginOptions: { tooltipText: string; targetIndex: never }
     ) {
       const { ctx } = chart;
       const { tooltipText, targetIndex } = pluginOptions;

@@ -1,20 +1,24 @@
-import { userLocationType } from "@/types";
+import { AppDispatch } from "@/store";
 import { useEffect } from "react";
+import { setLocation } from "@/store/slices/kaloSlice";
+import { useDispatch } from "react-redux";
 
-export default function LocationComponent({
-  setLocation,
-}: {
-  setLocation: ({ latitude, longitude }: userLocationType) => void;
-}) {
+const LocationComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
+        dispatch(
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          })
+        );
       });
     }
-  }, [setLocation]);
+  }, [dispatch]);
   return null;
-}
+};
+
+export default LocationComponent;

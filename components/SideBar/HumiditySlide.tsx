@@ -13,6 +13,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Chart,
 } from "chart.js";
 type propType = {
   value: number;
@@ -74,7 +75,6 @@ const ExponentialChart = ({
         label: "Exponential Growth",
         data: exponentialData,
         borderColor: "#52cae3",
-        fill: true,
         pointRadius: 0,
       },
       {
@@ -117,9 +117,9 @@ const ExponentialChart = ({
     id: "customTooltip",
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     afterDatasetsDraw(
-      chart: { getDatasetMeta?: any; ctx?: any },
-      args: any,
-      pluginOptions: { tooltipText: unknown; targetIndex: never }
+      chart: Chart,
+      args: object,
+      pluginOptions: { tooltipText: string; targetIndex: never }
     ) {
       const { ctx } = chart;
       const { tooltipText, targetIndex } = pluginOptions;

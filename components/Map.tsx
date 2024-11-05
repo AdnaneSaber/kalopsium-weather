@@ -8,7 +8,7 @@ interface MapProps {
   zoom?: number;
 }
 
-const Map: React.FC<MapProps> = ({ posix, index, zoom = 9 }) => {
+const Map: React.FC<MapProps> = ({ index, posix, zoom = 9 }) => {
   const accessToken = process.env.NEXT_PUBLIC_MAPGL_APIKEY;
   const mapRef = useRef<MapboxMap | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);

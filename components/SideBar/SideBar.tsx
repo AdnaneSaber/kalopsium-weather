@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import LocationComponent from "../Location";
-import { useKaloContext } from "@/app/theme-provider";
-import { mapSlideType, userLocationType } from "@/types";
+import { mapSlideType } from "@/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { SwiperClass } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -11,6 +11,9 @@ import ReactDOMServer from "react-dom/server";
 import TempFeelsLike from "./TempFeelsLike";
 import { ChevronRight, Navigation } from "react-feather";
 import Map from "../Map";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+
 import "swiper/css/pagination";
 const poppins = Poppins({
   weight: "300",
@@ -22,32 +25,53 @@ const lora = Lora({
   style: ["italic"],
 });
 
-const SideBar = () => {
-  const { setLocation, userLocation } = useKaloContext();
-  const [activeMapIndex, setActiveMapIndex] = useState(0);
-  const [locationShared, setLocationShared] = useState(false);
-  const [maps, setMaps] = useState<mapSlideType[]>([]);
+const initialMaps = [
+  {
+    mapComponent: <Map key={1} index={1} posix={[126.983861, 37.57022]} />,
+    city: "Seoul",
+    country: "South Korea",
+    time: "8:00 PM",
+  },
+  {
+    mapComponent: <Map key={2} index={2} posix={[-7.62, 33.5945]} />,
+    city: "Casablanca",
+    country: "Morocco",
+    time: "8:00 PM",
+  },
+];
 
+const SideBar = () => {
+  const [activeMapIndex, setActiveMapIndex] = useState(0);
+  const [maps, setMaps] = useState<mapSlideType[]>(initialMaps);
+  const { userLocation } = useSelector((state: RootState) => state.kalo);
   const handleSlideChange = (swiper: SwiperClass) => {
     setActiveMapIndex(swiper.activeIndex);
   };
+  // useEffect(() => {
+  //   let finalMaps = [];
+
+  //   if (userLocation.latitude !== 0 && userLocation.longitude !== 0) {
+  //     finalMaps = initialMaps.slice();
+  //     finalMaps.unshift({
+  //       mapComponent: (
+  //         <Map
+  //           key={0}
+  //           index={0}
+  //           posix={[userLocation.longitude, userLocation.latitude]}
+  //         />
+  //       ),
+  //       city: "idk",
+  //       country: "idk",
+  //       time: "",
+  //     });
+  //   } else {
+  //     finalMaps = initialMaps;
+  //   }
+
+  //   setMaps(finalMaps);
+  // }, [userLocation]);
   useEffect(() => {
     let finalMaps = [];
-    const initialMaps = [
-      {
-        mapComponent: <Map key={1} index={1} posix={[126.983861, 37.57022]} />,
-        city: "Seoul",
-        country: "South Korea",
-        time: "8:00 PM",
-      },
-      {
-        mapComponent: <Map key={2} index={2} posix={[-7.62, 33.5945]} />,
-        city: "Casablanca",
-        country: "Morocco",
-        time: "8:00 PM",
-      },
-    ];
-
     if (userLocation.latitude !== 0 && userLocation.longitude !== 0) {
       finalMaps = initialMaps.slice();
       finalMaps.unshift({
@@ -65,21 +89,8 @@ const SideBar = () => {
     } else {
       finalMaps = initialMaps;
     }
-
     setMaps(finalMaps);
   }, [userLocation]);
-  useEffect(() => {
-    setLocationShared(
-      userLocation.latitude !== 0 && userLocation.longitude !== 0
-    );
-  }, [userLocation]);
-
-  const stableSetLocation = useCallback(
-    (location: userLocationType) => {
-      setLocation(location);
-    },
-    [setLocation]
-  );
   const slides: React.JSX.Element[] = [
     <HumiditySlide key={1} value={75} tooltipText="Humidity" />,
     <TempFeelsLike key={2} value={18} tooltipText="Temperature" />,
@@ -131,12 +142,16 @@ const SideBar = () => {
                       className={
                         classname +
                         "  flex items-center !w-2 !h-2 " +
-                        (index === activeMapIndex && locationShared
+                        (index === activeMapIndex &&
+                        userLocation.latitude &&
+                        userLocation.longitude
                           ? " !bg-transparent "
                           : " border border-white/40 rounded-full !bg-white")
                       }
                     >
-                      {index === activeMapIndex && locationShared ? (
+                      {index === activeMapIndex &&
+                      userLocation.latitude &&
+                      userLocation.longitude ? (
                         <Navigation
                           fill="#ffffff"
                           size={15}
@@ -182,7 +197,7 @@ const SideBar = () => {
           </div>
         </div>
       )}
-      <LocationComponent setLocation={(e) => stableSetLocation(e)} />
+      <LocationComponent />
     </div>
   );
 };
