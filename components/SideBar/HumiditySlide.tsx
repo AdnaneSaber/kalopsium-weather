@@ -107,7 +107,6 @@ const ExponentialChart = ({
         enabled: false,
       },
       customTooltip: {
-        // Custom plugin for always showing tooltip text
         tooltipText,
         targetIndex,
       },
@@ -124,8 +123,8 @@ const ExponentialChart = ({
       const { ctx } = chart;
       const { tooltipText, targetIndex } = pluginOptions;
 
-      const dataset = chart.getDatasetMeta(1); // Get the dataset for the target dot
-      const dataPoint = dataset?.data[targetIndex]; // Get the target dot element
+      const dataset = chart.getDatasetMeta(1);
+      const dataPoint = dataset?.data[targetIndex];
 
       if (dataPoint && ctx) {
         ctx.save();
@@ -133,7 +132,6 @@ const ExponentialChart = ({
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "right";
 
-        // Draw text above the target dot
         ctx.fillText(tooltipText, dataPoint.x - 5, dataPoint.y - 15);
         ctx.restore();
       }
