@@ -18,50 +18,50 @@ const initialState: WeatherState = {
   },
   // ** SAVING DATA should be null
   data: {
-    coord: {
-      lon: 126.978,
-      lat: 37.5665,
+    "coord": {
+        "lon": 126.9813,
+        "lat": 37.5694
     },
-    weather: [
-      {
-        id: 800,
-        main: "Clear",
-        description: "clear sky",
-        icon: "01n",
-      },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
     ],
-    base: "stations",
-    main: {
-      temp: 4.76,
-      feels_like: 1.81,
-      temp_min: 4.66,
-      temp_max: 4.76,
-      pressure: 1024,
-      humidity: 60,
-      sea_level: 1024,
-      grnd_level: 1017,
+    "base": "stations",
+    "main": {
+        "temp": 10.02,
+        "feels_like": 7.91,
+        "temp_min": 9.74,
+        "temp_max": 10.71,
+        "pressure": 1027,
+        "humidity": 32,
+        "sea_level": 1027,
+        "grnd_level": 1021
     },
-    visibility: 10000,
-    wind: {
-      speed: 3.6,
-      deg: 310,
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.6,
+        "deg": 330
     },
-    clouds: {
-      all: 0,
+    "clouds": {
+        "all": 0
     },
-    dt: 1730818696,
-    sys: {
-      type: 1,
-      id: 8105,
-      country: "KR",
-      sunrise: 1730757670,
-      sunset: 1730795410,
+    "dt": 1730883412,
+    "sys": {
+        "type": 1,
+        "id": 8105,
+        "country": "KR",
+        "sunrise": 1730844133,
+        "sunset": 1730881751
     },
-    timezone: 32400,
-    id: 1835848,
-    name: "Seoul",
-    cod: 200,
-  },
+    "timezone": 32400,
+    "id": 1835848,
+    "name": "Seoul",
+    "cod": 200
+},
   loading: false,
   error: null,
 };

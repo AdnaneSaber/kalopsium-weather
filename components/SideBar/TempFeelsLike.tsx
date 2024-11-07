@@ -23,19 +23,22 @@ const TempFeelsLike = ({ value, tooltipText }: propType) => {
     <div className="py-3 px-3 relative h-full">
       <div className="px-4 rounded-3xl bg-white/10 w-24 h-10 abesolute flex gap-1 items-center justify-center text-sm">
         <span className="flex gap-1 items-center">
-          {value > 5 ? <ArrowUp size={18} /> : <ArrowDown size={18} />}
-          {value}
+          {parseInt(value.toFixed(0)) > 5 ? <ArrowUp size={18} /> : <ArrowDown size={18} />}
+          {parseInt(value.toFixed(0))}
         </span>
-        {value > 13 ? (
+        {parseInt(value.toFixed(0)) > 13 ? (
           <Sun size={20} />
-        ) : value < 5 ? (
+        ) : parseInt(value.toFixed(0)) < 5 ? (
           <CloudSnow size={18} />
         ) : (
           <Wind size={18} />
         )}
       </div>
-      <div className="w-full mb-3">
-        <ExponentialChart targetValue={value} tooltipText={tooltipText} />
+      <div className={"w-full mb-3 "+parseInt(value.toFixed(0))}>
+        <ExponentialChart
+          targetValue={parseInt(value.toFixed(0))}
+          tooltipText={tooltipText}
+        />
       </div>
     </div>
   );

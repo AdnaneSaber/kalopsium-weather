@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -27,11 +28,76 @@ body {
     font-style: italic;
     src: url(https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400..700&display=swap);
   }
+
   @font-face {
     font-family: "Poppins", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     src: url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
   }
+
+}
+
+@layer components {
+
+  .neonglow::before {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    transition: .4s;
+
+    /* Glowing border effect */
+    background: linear-gradient(135deg,
+        rgba(255, 0, 150, 0.7),
+        rgba(0, 204, 255, 0.7));
+    filter: blur(10px);
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .neonglow::after {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    transition: .4s;
+
+    /* Inner neon ring */
+    background: linear-gradient(135deg,
+        rgba(255, 0, 150, 1),
+        rgba(0, 204, 255, 1));
+    filter: blur(5px);
+    z-index: -2;
+    opacity: 0.5;
+  }
+
+  .kalopsai-input-icon::after {
+    content: "";
+    background-image: url('/drawing.svg');
+    width: 40px;
+    height: 35px;
+    position: absolute;
+    top: 7px;
+    filter: brightness(2);
+    left: 9px;
+  }
   
+  .bubble-chat::after {
+    content: "";
+    background-image: url('/drawing.svg');
+    background-color: #17171750;
+    background-size: 22px 25px ;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: brightness(2);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    padding: 2px;
+    top: 5px;
+    filter: brightness(2);
+    left: 0;
+    border: 1px solid #ffffff30;
+  }
 }
