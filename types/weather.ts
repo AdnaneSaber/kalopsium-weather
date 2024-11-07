@@ -1,4 +1,4 @@
-export interface ILocationWeatherResponse {
+export type ILocationWeatherResponse = {
   coord: {
     lon: number;
     lat: number;
@@ -40,11 +40,22 @@ export interface ILocationWeatherResponse {
   id: number;
   name: string;
   cod: number;
-}
-export interface ICityCoordsResponse {
+};
+export type ICityCoordsResponse = {
   name: string;
   local_names: Record<string, string>;
   lat: number;
   lon: number;
   country: string;
-}
+};
+
+export type IWeatherMapper = {
+  title: string;
+  description: string;
+  icon: string;
+  icon_night?: string;
+};
+
+export type WeatherData = {
+  [key: number]: IWeatherMapper;
+};

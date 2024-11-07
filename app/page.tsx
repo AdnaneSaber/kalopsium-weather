@@ -1,9 +1,26 @@
-import { Metadata } from "next";
+import Chat from "@/components/Chat";
+import RegionWeatherWidget from "@/components/Landing/RegionWeatherWidget";
+import Wallpaper from "@/components/Landing/Wallpaper";
 
-export const metadata: Metadata = {
-  title: "Kalopsium - Weather Assistant",
-  description: "Kalopsium - Weather AI assistant",
-};
+export function generateMetadata() {
+  return {
+    title: "Kalopsium - Weather Assistant",
+    description: "Kalopsium - Weather AI assistant",
+  };
+}
 export default function Home() {
-  return <></>;
+  return (
+    <>
+      <Wallpaper />
+      <div className="grid grid-cols-11 grid-rows-7 w-full h-full">
+        <div className="col-span-5 row-span-4 flex flex-col h-full w-full justify-between">
+          <RegionWeatherWidget />
+        </div>
+        <div className="col-span-6 row-span-4">
+          <Chat />
+        </div>
+        <div className="col-span-5 row-span-3"></div>
+      </div>
+    </>
+  );
 }

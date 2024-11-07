@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { SwiperClass } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import HumiditySlide from "./HumiditySlide";
-import { Lora, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import ReactDOMServer from "react-dom/server";
 import TempFeelsLike from "./TempFeelsLike";
 import { ChevronRight, Navigation } from "react-feather";
@@ -17,20 +17,16 @@ import { AppDispatch, RootState } from "@/store";
 import "swiper/css/pagination";
 import { fetchWeatherData } from "@/store/slices/weatherSlice";
 const poppins = Poppins({
-  weight: "300",
+  weight: ["100", "200", "300"],
   subsets: ["latin"],
 });
-const lora = Lora({
-  weight: "500",
-  subsets: ["latin"],
-  style: ["italic"],
-});
+
 
 const initialMaps = [
   {
     mapComponent: <Map key={1} index={1} posix={[126.983861, 37.57022]} />,
     city: "Seoul",
-    country: "SK",
+    country: "KR",
     time: "8:00 PM",
   },
   {
@@ -94,8 +90,12 @@ const SideBar = () => {
   ];
 
   return (
-    <div className="w-80 flex flex-col justify-between gap-10 pt-16 pb-10 px-6 border border-white/30 mx-16 my-14 top-0 left-0 bottom-0 fixed rounded-3xl backdrop-blur-xl bg-[#7d7d7d4d]/30">
-      <h1 className={"self-center text-4xl " + lora.className}>Kalopsium</h1>
+    <div className="w-80 flex flex-col justify-between gap-10 pt-16 pb-10 px-6 border border-white/30 top-0 left-0 bottom-0 relative rounded-3xl backdrop-blur-xl bg-[#7d7d7d4d]/15">
+      <h1
+        className={"self-center text-4xl italic font-thin " + poppins.className}
+      >
+        Kalopsium
+      </h1>
       <div>
         <h3 className={"text-lightgrey/90 text-sm m-2 " + poppins.className}>
           Status
@@ -178,7 +178,7 @@ const SideBar = () => {
                   <div
                     className={
                       "w-full h-full block !transition-all rounded-full " +
-                      (activeMapIndex === key ? "opacity-1" : "opacity-45")
+                      (activeMapIndex === key ? "opacity-75" : "opacity-45")
                     }
                   >
                     {map.mapComponent}
