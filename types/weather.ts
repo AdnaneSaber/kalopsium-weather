@@ -83,19 +83,39 @@ export type WeatherMessageResponse = {
     message: number;
     cnt: number;
     city: string;
-    day_data: {
-      dt: number;
-      main: MainWeatherData;
-      weather: WeatherInfo[];
-      clouds: CloudsInfo;
-      wind: WindInfo;
-      visibility: number;
-      pop: number;
-      sys: {
-        pod: string;
-      };
-      dt_txt: string;
-    };
+    day_data: WeatherDayData;
     lang: string;
   };
+};
+
+export type WeatherDayData = {
+  dt: number;
+  main: MainWeatherData;
+  weather: WeatherInfo[];
+  clouds: CloudsInfo;
+  wind: WindInfo;
+  visibility: number;
+  pop: number;
+  sys: {
+    pod: string;
+  };
+  dt_txt: string;
+};
+type WeatherCityData = {
+  id: number;
+  name: string;
+  coord: Coordinates;
+  country: string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
+};
+
+export type WeatherForcastData = {
+  cod: number;
+  message: number;
+  cnt: number;
+  list: WeatherDayData[];
+  city: WeatherCityData;
 };
