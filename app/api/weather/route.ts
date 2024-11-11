@@ -18,7 +18,7 @@ export const GET = async (request: NextRequest): Promise<Response> => {
     if (status === 200) {
       return Response.json(data, { status: 200 });
     } else {
-      return Response.json(data, { status: status });
+      return Response.json(data, { status });
     }
   } catch (error) {
     return Response.json(
