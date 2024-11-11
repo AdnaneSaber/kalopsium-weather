@@ -16,52 +16,7 @@ const initialState: WeatherState = {
     latitude: 0,
     longitude: 0,
   },
-  // ** SAVING DATA should be null
-  data: {
-    "coord": {
-        "lon": 126.9813,
-        "lat": 37.5694
-    },
-    "weather": [
-        {
-            "id": 800,
-            "main": "Clear",
-            "description": "clear sky",
-            "icon": "01n"
-        }
-    ],
-    "base": "stations",
-    "main": {
-        "temp": 10.02,
-        "feels_like": 7.91,
-        "temp_min": 9.74,
-        "temp_max": 10.71,
-        "pressure": 1027,
-        "humidity": 32,
-        "sea_level": 1027,
-        "grnd_level": 1021
-    },
-    "visibility": 10000,
-    "wind": {
-        "speed": 3.6,
-        "deg": 330
-    },
-    "clouds": {
-        "all": 0
-    },
-    "dt": 1730883412,
-    "sys": {
-        "type": 1,
-        "id": 8105,
-        "country": "KR",
-        "sunrise": 1730844133,
-        "sunset": 1730881751
-    },
-    "timezone": 32400,
-    "id": 1835848,
-    "name": "Seoul",
-    "cod": 200
-},
+  data: null,
   loading: false,
   error: null,
 };
