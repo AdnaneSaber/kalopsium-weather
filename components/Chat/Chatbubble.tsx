@@ -21,9 +21,7 @@ const Chatbubble = ({ me, text }: propsType) => {
         montserrat.className
       }
     >
-      <span>
-        {text}
-      </span>
+      <span>{text}</span>
     </div>
   );
 };
