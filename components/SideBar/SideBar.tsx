@@ -51,8 +51,7 @@ const SideBar = () => {
   };
   useEffect(() => {
     if (location.latitude !== 0 && location.longitude !== 0) {
-      // ** SAVING DATA
-      // dispatch(fetchWeatherData(location));
+      dispatch(fetchWeatherData(location));
     } else {
       setMaps(initialMaps);
     }
