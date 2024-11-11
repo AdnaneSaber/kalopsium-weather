@@ -22,7 +22,7 @@ const Chatbubble = ({ me, text }: propsType) => {
       }
     >
       <span>
-        Chatbubble Chatbubble Chatbubble Chatbubble Chatbubble Chatbubble
+        {text}
       </span>
     </div>
   );
