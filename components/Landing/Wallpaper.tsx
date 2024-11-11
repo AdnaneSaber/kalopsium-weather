@@ -9,24 +9,29 @@ const Wallpaper = () => {
   const { data: locationData } = useSelector(
     (state: RootState) => state.weather
   );
-  return locationData ? (
-    <Image
-      src={imagesMapper[locationData?.weather[0].id as number][0]}
-      alt="Kalopsium"
-      width={4000}
-      height={4000}
-      priority
-      className="w-screen h-screen fixed top-0 left-0 object-center object-cover -z-10 brightness-50"
-    />
-  ) : (
-    <Image
-      src={'/sky.jpg'}
-      alt="Kalopsium"
-      width={4000}
-      height={4000}
-      priority
-      className="w-screen h-screen fixed top-0 left-0 object-center object-cover -z-10 brightness-50"
-    />
+  return (
+    <>
+      <div className="inset-0 absolute -z-10 bg-slate-900/40"></div>
+      {locationData ? (
+        <Image
+          src={imagesMapper[locationData?.weather[0].id as number][0]}
+          alt="Kalopsium"
+          width={4000}
+          height={4000}
+          priority
+          className="w-screen h-screen fixed top-0 left-0 object-center object-cover -z-20 brightness-50"
+        />
+      ) : (
+        <Image
+          src={"/sky.jpg"}
+          alt="Kalopsium"
+          width={4000}
+          height={4000}
+          priority
+          className="w-screen h-screen fixed top-0 left-0 object-center object-cover -z-20 brightness-50"
+        />
+      )}
+    </>
   );
 };
 

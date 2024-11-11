@@ -1,4 +1,5 @@
 import Chat from "@/components/Chat";
+import Footer from "@/components/Landing/Footer";
 import RegionWeatherWidget from "@/components/Landing/RegionWeatherWidget";
 import Wallpaper from "@/components/Landing/Wallpaper";
 
@@ -19,7 +20,9 @@ export default function Home() {
         <div className="col-span-6 row-span-4">
           <Chat />
         </div>
-        <div className="col-span-5 row-span-3"></div>
+        <div className="col-span-11 row-span-3">
+          <Footer />
+        </div>
       </div>
     </>
   );

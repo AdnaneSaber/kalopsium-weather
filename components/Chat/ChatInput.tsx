@@ -24,8 +24,8 @@ const ChatInput = () => {
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
         disabled={loading}
-        placeholder="Ask Kalopsai..."
-        className="neon-input w-full relative z-10 pl-14 pr-6 py-3 rounded-full bg-gray-600/70 text-white outline-none shadow-lg placeholder:text-gray-300 placeholder:font-light placeholder:text-base"
+        placeholder="Ask Kalopsai about the weather in some city..."
+        className="neon-input w-full relative z-10 pl-14 pr-6 py-3 rounded-full bg-gray-600/70 text-white outline-none shadow-lg placeholder:text-gray-100/50 placeholder:font-light placeholder:text-base"
       />
     </div>
   );
