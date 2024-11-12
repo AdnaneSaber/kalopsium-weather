@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import weatherReducer from "./slices/weatherSlice";
-import chatbotReducer from "./slices/chatbotSlide";
-import kaloReducer from "./slices/kaloSlice";
+import chatbotReducer from "./slices/chatbotSlice";
 
 export const store = configureStore({
   reducer: {
     weather: weatherReducer,
     chatbot: chatbotReducer,
-    kalo: kaloReducer,
   },
 });
 

@@ -15,12 +15,14 @@ import {
   Legend,
   Chart,
 } from "chart.js";
+import { useTranslations } from "next-intl";
 type propType = {
   value: number;
   tooltipText: string;
 };
 
 const HumiditySlide = ({ value, tooltipText }: propType) => {
+  const t = useTranslations()
   return (
     <div className="py-3 px-3 relative h-full">
       <div className="px-4 rounded-3xl bg-white/10 w-24 h-10 abesolute flex gap-1 items-center justify-center text-sm">
@@ -31,7 +33,7 @@ const HumiditySlide = ({ value, tooltipText }: propType) => {
         </span>
         <Image
           src={icon}
-          alt="humidity"
+          alt={t('humidity')}
           width={0}
           height={0}
           className="w-6 h-6"
@@ -107,7 +109,6 @@ const ExponentialChart = ({
         enabled: false,
       },
       customTooltip: {
-        // Custom plugin for always showing tooltip text
         tooltipText,
         targetIndex,
       },
@@ -124,8 +125,8 @@ const ExponentialChart = ({
       const { ctx } = chart;
       const { tooltipText, targetIndex } = pluginOptions;
 
-      const dataset = chart.getDatasetMeta(1); // Get the dataset for the target dot
-      const dataPoint = dataset?.data[targetIndex]; // Get the target dot element
+      const dataset = chart.getDatasetMeta(1);
+      const dataPoint = dataset?.data[targetIndex];
 
       if (dataPoint && ctx) {
         ctx.save();
@@ -133,7 +134,6 @@ const ExponentialChart = ({
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "right";
 
-        // Draw text above the target dot
         ctx.fillText(tooltipText, dataPoint.x - 5, dataPoint.y - 15);
         ctx.restore();
       }

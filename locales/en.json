@@ -1,0 +1,17 @@
+{
+    "welcome": "Welcome to Kalopsium – Your Personalized Weather Companion",
+    "weather_today": "What's the weather like today?",
+    "cities": {
+        "paris": "Paris",
+        "moscow": "Moscow"
+    },
+    "area": "Area",
+    "status": "status",
+    "swipe": "Swipe for more details",
+    "description": "Get real-time weather updates, air quality insights, and forecasts for any location. Simply type in a question to get started, or explore current conditions in {city}, {country}.",
+    "question": "\"What's the weather like today?\"",
+    "placeholder": "Ask Kalopsium about the weather in some city...",
+    "humidity": "Humidity",
+    "temperature": "Temperature",
+    "chat_error": "An Error has occurred, please try again with the city with capital letter"
+}

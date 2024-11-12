@@ -14,5 +14,4 @@ export type mapSlideType = {
   mapComponent: React.JSX.Element;
   city: string;
   country: string;
-  time: string;
 };

@@ -1,33 +1,52 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { ILocationWeatherResponse } from "@/types/weather";
+import { userLocationType } from "@/types";
 
 interface WeatherState {
-  location: string | null;
-  data: unknown;
+  location: userLocationType;
+  data: ILocationWeatherResponse | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: WeatherState = {
-  location: null,
+  location: {
+    latitude: 0,
+    longitude: 0,
+  },
   data: null,
   loading: false,
   error: null,
 };
 
-export const fetchWeatherData = createAsyncThunk(
-  'weather/fetchWeatherData',
-  async (location: string) => {
-    const response = await fetch(`/api/weather?location=${location}`);
-    return await response.json();
+export const fetchWeatherData = createAsyncThunk<
+  ILocationWeatherResponse,
+  { location: userLocationType; lang: string },
+  { rejectValue: string }
+>(
+  "weather/fetchWeatherData",
+  async ({ location, lang }, { rejectWithValue }) => {
+    try {
+      const { latitude, longitude } = location;
+      const response = await axios.get(
+        `/api/weather?latitude=${latitude}&longitude=${longitude}&lang=${lang}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch weather data"
+      );
+    }
   }
 );
 
 const weatherSlice = createSlice({
-  name: 'weather',
+  name: "weather",
   initialState,
   reducers: {
-    setLocation: (state, action: PayloadAction<string>) => {
+    setLocation: (state, action: PayloadAction<userLocationType>) => {
       state.location = action.payload;
     },
   },
@@ -37,13 +56,17 @@ const weatherSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchWeatherData.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.loading = false;
-      })
+      .addCase(
+        fetchWeatherData.fulfilled,
+        (state, action: PayloadAction<ILocationWeatherResponse>) => {
+          state.data = action.payload;
+          state.loading = false;
+        }
+      )
       .addCase(fetchWeatherData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch weather data';
+        state.error =
+          (action.payload as string) || "Failed to fetch weather data";
       });
   },
 });
