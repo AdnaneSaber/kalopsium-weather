@@ -2,6 +2,7 @@ import Chat from "@/components/Chat";
 import Footer from "@/components/Landing/Footer";
 import RegionWeatherWidget from "@/components/Landing/RegionWeatherWidget";
 import Wallpaper from "@/components/Landing/Wallpaper";
+import { cookies } from "next/headers";
 
 export function generateMetadata() {
   return {
@@ -9,7 +10,7 @@ export function generateMetadata() {
     description: "Kalopsium - Weather AI assistant",
   };
 }
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <Wallpaper />

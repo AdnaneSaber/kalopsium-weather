@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import LocationComponent from "../Location";
 import { mapSlideType } from "@/types";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,32 +16,34 @@ import { AppDispatch, RootState } from "@/store";
 
 import "swiper/css/pagination";
 import { fetchWeatherData } from "@/store/slices/weatherSlice";
+import { useLocale, useTranslations } from "next-intl";
+import {} from "react-i18next";
 const poppins = Poppins({
   weight: ["100", "200", "300"],
   subsets: ["latin"],
 });
 
-
-const initialMaps = [
-  {
-    mapComponent: <Map key={1} index={1} posix={[126.983861, 37.57022]} />,
-    city: "Seoul",
-    country: "KR",
-    time: "8:00 PM",
-  },
-  {
-    mapComponent: <Map key={2} index={2} posix={[-7.62, 33.5945]} />,
-    city: "Casablanca",
-    country: "MA",
-    time: "8:00 PM",
-  },
-];
-
 const SideBar = () => {
+  const t = useTranslations();
+  const initialMaps = [
+    {
+      mapComponent: (
+        <Map key={1} index={1} posix={[2.3200410217200766, 48.8588897]} />
+      ),
+      city: t("cities.paris"),
+      country: "FR",
+    },
+    {
+      mapComponent: <Map key={2} index={2} posix={[37.6174943, 55.7504461]} />,
+      city: t("cities.moscow"),
+      country: "RU",
+    },
+  ];
   const [activeMapIndex, setActiveMapIndex] = useState(0);
   const [maps, setMaps] = useState<mapSlideType[]>(initialMaps);
   const { location } = useSelector((state: RootState) => state.weather);
   const dispatch = useDispatch<AppDispatch>();
+  const lang = useLocale();
   const { data: locationData } = useSelector(
     (state: RootState) => state.weather
   );
@@ -51,11 +53,11 @@ const SideBar = () => {
   };
   useEffect(() => {
     if (location.latitude !== 0 && location.longitude !== 0) {
-      dispatch(fetchWeatherData(location));
+      dispatch(fetchWeatherData({ location, lang }));
     } else {
       setMaps(initialMaps);
     }
-  }, [dispatch, location]);
+  }, [dispatch, location, lang]);
   useEffect(() => {
     if (locationData) {
       const finalMaps = initialMaps.slice();
@@ -69,7 +71,6 @@ const SideBar = () => {
         ),
         city: locationData.name,
         country: locationData.sys.country,
-        time: "",
       });
       setMaps(finalMaps);
     }
@@ -79,12 +80,12 @@ const SideBar = () => {
     <HumiditySlide
       key={1}
       value={locationData?.main.humidity || 75}
-      tooltipText="Humidity"
+      tooltipText={t("humidity")}
     />,
     <TempFeelsLike
       key={2}
       value={locationData?.main.feels_like || 18}
-      tooltipText="Temperature"
+      tooltipText={t("temperature")}
     />,
   ];
 
@@ -97,7 +98,7 @@ const SideBar = () => {
       </h1>
       <div>
         <h3 className={"text-lightgrey/90 text-sm m-2 " + poppins.className}>
-          Status
+          {t("status")}
         </h3>
         <Swiper spaceBetween={50} slidesPerView={1} className="w-full h-48">
           {slides.map((slide, key) => (
@@ -111,18 +112,18 @@ const SideBar = () => {
         </Swiper>
         <h3
           className={
-            "text-white/60 text-sm m-2 flex items-center gap-1 text-center justify-center " +
+            "text-white/60 text-xs m-2 flex items-center gap-1 text-center justify-center " +
             poppins.className
           }
         >
-          Swipe for more details
+          {t("swipe")}
           <ChevronRight size={20} />
         </h3>
       </div>
       {maps.length && (
         <div>
           <h3 className={"text-lightgrey/90 text-sm m-2 " + poppins.className}>
-            Area
+            {t("area")}
           </h3>
           <div className="overflow-hidden w-full relative -top-7">
             <Swiper

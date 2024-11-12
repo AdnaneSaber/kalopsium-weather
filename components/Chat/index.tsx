@@ -10,7 +10,11 @@ const Chat = () => {
   const messages = useSelector((state: RootState) => state.chatbot.messages);
   return (
     <div className="pt-16 flex items-center justify-center h-full w-full flex-col gap-4 m-auto">
-      {messages.length > 0 ? <ChatFrame /> : <WeatherWidgets />}
+      {messages.length > 0 ? (
+        <ChatFrame />
+      ) : (
+        <WeatherWidgets />
+      )}
       <ChatInput />
     </div>
   );

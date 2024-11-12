@@ -66,8 +66,8 @@ export type ICityCoordsResponse = {
 };
 
 export type IWeatherMapper = {
-  title: string;
-  description: string;
+  title: { en: string; kr: string };
+  description: { en: string; kr: string };
   icon: string;
   icon_night?: string;
 };

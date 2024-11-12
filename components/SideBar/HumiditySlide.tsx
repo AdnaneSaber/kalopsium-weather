@@ -15,12 +15,14 @@ import {
   Legend,
   Chart,
 } from "chart.js";
+import { useTranslations } from "next-intl";
 type propType = {
   value: number;
   tooltipText: string;
 };
 
 const HumiditySlide = ({ value, tooltipText }: propType) => {
+  const t = useTranslations()
   return (
     <div className="py-3 px-3 relative h-full">
       <div className="px-4 rounded-3xl bg-white/10 w-24 h-10 abesolute flex gap-1 items-center justify-center text-sm">
@@ -31,7 +33,7 @@ const HumiditySlide = ({ value, tooltipText }: propType) => {
         </span>
         <Image
           src={icon}
-          alt="humidity"
+          alt={t('humidity')}
           width={0}
           height={0}
           className="w-6 h-6"
