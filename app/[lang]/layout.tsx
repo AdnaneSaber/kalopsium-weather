@@ -8,7 +8,7 @@ import "swiper/css";
 import "../globals.css";
 import "swiper/css/pagination";
 import "leaflet/dist/leaflet.css";
-import { NextIntlClientProvider, useLocale } from "next-intl";
+import { useLocale } from "next-intl";
 
 const poppins = Poppins({
   weight: "400",

@@ -9,7 +9,7 @@
     "status": "상태",
     "swipe": "자세한 정보를 보려면 스와이프하세요",
     "description": "실시간 날씨 업데이트, 공기 질 정보, 그리고 모든 위치에 대한 예보를 제공합니다. 질문을 입력하여 시작하거나, 현재 {city}, {country}의 날씨를 확인해 보세요.",
-    "question": "\"오늘 날씨는 어떤가요?\"",
+    "question": "\"오늘 서울 날씨는 어때요?\"",
     "placeholder": "Kalopsium에게 다른 도시의 날씨를 물어보세요...",
     "humidity": "습도",
     "temperature": "온도",

@@ -2,7 +2,6 @@ import Chat from "@/components/Chat";
 import Footer from "@/components/Landing/Footer";
 import RegionWeatherWidget from "@/components/Landing/RegionWeatherWidget";
 import Wallpaper from "@/components/Landing/Wallpaper";
-import { cookies } from "next/headers";
 
 export function generateMetadata() {
   return {

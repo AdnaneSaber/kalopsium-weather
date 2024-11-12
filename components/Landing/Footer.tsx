@@ -1,5 +1,4 @@
 "use client";
-import { Locale } from "@/i18n-config";
 import { RootState } from "@/store";
 import { WeatherDayData, WeatherForcastData } from "@/types/weather";
 import axios from "axios";
@@ -68,11 +67,11 @@ const Footer = () => {
         setDaysData(data.list);
       })();
     }
-  }, [locationData]);
+  }, [locationData, lang]);
 
   return (
-    <div className="py-10 w-full h-full flex flex-col justify-between">
-      <div className="w-full flex justify-between h-full">
+    <div className="py-10 w-full h-full flex flex-col justify-center">
+      <div className="w-full flex justify-between h-full max-h-28">
         {listDays().map(({ day, date }, index) => (
           <div key={index} className="flex flex-col justify-between">
             <div

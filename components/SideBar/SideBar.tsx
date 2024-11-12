@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import LocationComponent from "../Location";
 import { mapSlideType } from "@/types";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,7 +17,6 @@ import { AppDispatch, RootState } from "@/store";
 import "swiper/css/pagination";
 import { fetchWeatherData } from "@/store/slices/weatherSlice";
 import { useLocale, useTranslations } from "next-intl";
-import {} from "react-i18next";
 const poppins = Poppins({
   weight: ["100", "200", "300"],
   subsets: ["latin"],
@@ -25,20 +24,24 @@ const poppins = Poppins({
 
 const SideBar = () => {
   const t = useTranslations();
-  const initialMaps = [
-    {
-      mapComponent: (
-        <Map key={1} index={1} posix={[2.3200410217200766, 48.8588897]} />
-      ),
-      city: t("cities.paris"),
-      country: "FR",
-    },
-    {
-      mapComponent: <Map key={2} index={2} posix={[37.6174943, 55.7504461]} />,
-      city: t("cities.moscow"),
-      country: "RU",
-    },
-  ];
+  const initialMaps = useMemo(() => {
+    return [
+      {
+        mapComponent: (
+          <Map key={1} index={1} posix={[2.3200410217200766, 48.8588897]} />
+        ),
+        city: t("cities.paris"),
+        country: "FR",
+      },
+      {
+        mapComponent: (
+          <Map key={2} index={2} posix={[37.6174943, 55.7504461]} />
+        ),
+        city: t("cities.moscow"),
+        country: "RU",
+      },
+    ];
+  }, [t]);
   const [activeMapIndex, setActiveMapIndex] = useState(0);
   const [maps, setMaps] = useState<mapSlideType[]>(initialMaps);
   const { location } = useSelector((state: RootState) => state.weather);
@@ -57,7 +60,7 @@ const SideBar = () => {
     } else {
       setMaps(initialMaps);
     }
-  }, [dispatch, location, lang]);
+  }, [dispatch, location, lang, initialMaps]);
   useEffect(() => {
     if (locationData) {
       const finalMaps = initialMaps.slice();
@@ -74,7 +77,7 @@ const SideBar = () => {
       });
       setMaps(finalMaps);
     }
-  }, [locationData]);
+  }, [locationData, initialMaps]);
 
   const slides: React.JSX.Element[] = [
     <HumiditySlide
