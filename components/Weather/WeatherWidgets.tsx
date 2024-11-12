@@ -1,8 +1,9 @@
+"use client";
 import { RootState } from "@/store";
-import { useTranslation } from "next-i18next";
 import { Montserrat } from "next/font/google";
 import React from "react";
 import { useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 
 const montserrat = Montserrat({
   weight: ["100", "200", "300", "400", "500"],
@@ -10,7 +11,8 @@ const montserrat = Montserrat({
 });
 const WeatherWidgets = () => {
   const messages = useSelector((state: RootState) => state.chatbot.messages);
-  const { t } = useTranslation();
+  const locationData = useSelector((state: RootState) => state.weather.data);
+  const t = useTranslations();
   return (
     <div
       className={
@@ -21,12 +23,13 @@ const WeatherWidgets = () => {
     >
       <h1 className="text-3xl font-normal mb-4">{t("welcome")}</h1>
       <p className="text-lg">
-        Get real-time weather updates, air quality insights, and forecasts for
-        any location. Simply type in a question to get started, or explore
-        current conditions in Banpobondong, KR.
+        {t("description", {
+          country: locationData?.sys.country,
+          city: locationData?.name,
+        })}
       </p>
       <h4 className="text-xl font-medium mt-4">
-        &quot;Kalopsai, what&apos;s the weather like today?&quot;
+        {t('question')}
       </h4>
     </div>
   );

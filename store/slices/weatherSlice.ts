@@ -23,15 +23,15 @@ const initialState: WeatherState = {
 
 export const fetchWeatherData = createAsyncThunk<
   ILocationWeatherResponse,
-  userLocationType,
+  { location: userLocationType; lang: string },
   { rejectValue: string }
 >(
   "weather/fetchWeatherData",
-  async (location: userLocationType, { rejectWithValue }) => {
+  async ({ location, lang }, { rejectWithValue }) => {
     try {
       const { latitude, longitude } = location;
       const response = await axios.get(
-        `/api/weather?latitude=${latitude}&longitude=${longitude}`
+        `/api/weather?latitude=${latitude}&longitude=${longitude}&lang=${lang}`
       );
       return response.data;
     } catch (error) {

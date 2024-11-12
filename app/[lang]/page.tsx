@@ -9,7 +9,7 @@ export function generateMetadata() {
     description: "Kalopsium - Weather AI assistant",
   };
 }
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <Wallpaper />

@@ -1,7 +1,9 @@
 "use client";
+import { Locale } from "@/i18n-config";
 import { convertTimestampToDate } from "@/lib";
 import { WeatherMapper } from "@/lib/constants";
 import { RootState } from "@/store";
+import { useLocale } from "next-intl";
 import { Montserrat } from "next/font/google";
 import React from "react";
 import { MapPin } from "react-feather";
@@ -15,6 +17,7 @@ const RegionWeatherWidget = () => {
   const { data: locationData } = useSelector(
     (state: RootState) => state.weather
   );
+  const locale = useLocale() as Locale;
   return (
     <>
       <h4
@@ -28,7 +31,11 @@ const RegionWeatherWidget = () => {
         </span>
         <span className="text-base text-lightgrey">
           {"( "}
-          {convertTimestampToDate(locationData?.dt as number, "dddd, MMMM DD")}
+          {convertTimestampToDate(
+            locationData?.dt as number,
+            "dddd, MMMM DD",
+            locale
+          )}
           {" )"}
         </span>
       </h4>
@@ -75,12 +82,16 @@ const RegionWeatherWidget = () => {
           {locationData && (
             <>
               <span>
-                {WeatherMapper[locationData?.weather[0].id as number].title}
+                {
+                  WeatherMapper[locationData?.weather[0].id as number].title[
+                    locale
+                  ]
+                }
               </span>
               <span>
                 {
                   WeatherMapper[locationData?.weather[0].id as number]
-                    .description
+                    .description[locale]
                 }
               </span>
             </>

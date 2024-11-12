@@ -2,6 +2,7 @@
 import { RootState } from "@/store";
 import { WeatherDayData, WeatherForcastData } from "@/types/weather";
 import axios from "axios";
+import { useLocale } from "next-intl";
 import { Montserrat } from "next/font/google";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -14,26 +15,37 @@ const Footer = () => {
   const { data: locationData } = useSelector(
     (state: RootState) => state.weather
   );
+  const lang = useLocale();
   const [daysData, setDaysData] = useState<WeatherDayData[]>();
   const listDays = () => {
     const today = new Date();
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
+    const daysOfWeek: { [key: string]: string[] } = {
+      en: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      kr: [
+        "일요일",
+        "월요일",
+        "화요일",
+        "수요일",
+        "목요일",
+        "금요일",
+        "토요일",
+      ],
+    };
 
     const currentDayIndex = today.getDay();
-    console.log(currentDayIndex);
     const nextFiveDays = [];
 
     for (let i = 0; i <= 4; i++) {
       const nextDayIndex = (currentDayIndex + i) % 7;
-      const nextDayName = daysOfWeek[nextDayIndex];
+      const nextDayName = daysOfWeek[lang][nextDayIndex];
       const nextDate = new Date(today);
       nextDate.setDate(today.getDate() + i + 1);
 
@@ -50,19 +62,16 @@ const Footer = () => {
     if (locationData?.coord.lat) {
       (async () => {
         const { data } = await axios.get<WeatherForcastData>(
-          `/api/weather/week/?latitude=${locationData?.coord.lat}&longitude=${locationData?.coord.lon}`
+          `/api/weather/week/?latitude=${locationData?.coord.lat}&longitude=${locationData?.coord.lon}&lang=${lang}`
         );
         setDaysData(data.list);
       })();
     }
-  }, [locationData]);
-  useEffect(() => {
-    console.log(daysData);
-  }, [daysData]);
+  }, [locationData, lang]);
 
   return (
-    <div className="py-10 w-full h-full flex flex-col justify-between">
-      <div className="w-full flex justify-between h-full">
+    <div className="py-10 w-full h-full flex flex-col justify-center">
+      <div className="w-full flex justify-between h-full max-h-28">
         {listDays().map(({ day, date }, index) => (
           <div key={index} className="flex flex-col justify-between">
             <div
