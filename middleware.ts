@@ -10,9 +10,6 @@ export default async function middleware(req: NextRequest) {
 
   const urlLocale = req.nextUrl.pathname.split("/")[1] as Locale;
   const currentLocale = req.cookies.get("NEXT_LOCALE");
-  console.log(urlLocale);
-  console.log(currentLocale);
-  // If no locale is found in the URL and there's a locale in the cookie, redirect
   if (
     !urlLocale &&
     currentLocale &&
@@ -22,12 +19,10 @@ export default async function middleware(req: NextRequest) {
     redirectUrl.pathname = `/${currentLocale}${redirectUrl.pathname.replace(
       /^\/+/,
       ""
-    )}`; // Ensure no extra slashes
+    )}`;
 
-    // Perform the redirection to the correct path with locale
     return NextResponse.redirect(redirectUrl);
   } else {
-    // If the URL has a valid locale, use it; otherwise, default to 'en'
     const locale = locales.includes(urlLocale) ? urlLocale : "en";
     res.cookies.set("NEXT_LOCALE", locale);
   }

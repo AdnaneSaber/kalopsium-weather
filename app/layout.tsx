@@ -3,18 +3,12 @@ import { getMessages } from "next-intl/server";
 import { ReactNode } from "react";
 type Props = {
   children: ReactNode;
-  params: {
-    locale: string;
-  };
 };
 
-export default async function RootLayout({
-  children,
-  params: { locale },
-}: Props) {
+export default async function RootLayout({ children }: Props) {
   const messages = await getMessages();
   return (
-    <NextIntlClientProvider messages={messages} locale={locale}>
+    <NextIntlClientProvider messages={messages}>
       {children}
     </NextIntlClientProvider>
   );

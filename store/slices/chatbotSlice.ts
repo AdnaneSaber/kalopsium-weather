@@ -25,7 +25,6 @@ export const handleMessage = createAsyncThunk<
   "chatbot/handleMessage",
   async (query: string, { dispatch, rejectWithValue }) => {
     try {
-      console.log(query)
       const response = await axios.post("/api/chatbot", { query });
       dispatch(updateMessage({ user: query, bot: response.data.response }));
 
